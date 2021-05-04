@@ -9,7 +9,7 @@ interface CanvasProps{
 }
 
 
-const Canvas: React.FC<CanvasProps> = ({className, lineWidth=5,strokeColor="black", backgroundColor="white"}) => {
+const Canvas: React.FC<CanvasProps> = ({className, lineWidth=5,strokeColor="black", backgroundColor="white", children}) => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const contextRef = useRef<CanvasRenderingContext2D|null>(null);
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
@@ -37,6 +37,14 @@ const Canvas: React.FC<CanvasProps> = ({className, lineWidth=5,strokeColor="blac
             }
       },[lineWidth, strokeColor, backgroundColor])
   
+    
+    const clearCanvas = () => {
+        if (contextRef.current !== null) {
+            contextRef.current.clearRect(0, 0, canvasRef.current?.offsetWidth??200, canvasRef.current?.offsetHeight??200); 
+        }
+    }
+    
+    
     const startDrawing = (mouseEvent: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
         if (contextRef.current !== null) {
             contextRef.current.beginPath();
@@ -86,7 +94,10 @@ const Canvas: React.FC<CanvasProps> = ({className, lineWidth=5,strokeColor="blac
 
    
     return (
-        <canvas ref={canvasRef} onMouseDown={startDrawing} onTouchStart={startDrawingTouch} onTouchEnd={finishDrawingTouch} onTouchMove={drawTouch} onMouseUp={finishDrawing} onMouseMove={draw} className={className}/>
+        <>
+        <canvas ref={canvasRef} onMouseDown={startDrawing} onTouchStart={startDrawingTouch} onTouchEnd={finishDrawingTouch} onTouchMove={drawTouch} onMouseUp={finishDrawing} onMouseMove={draw} className={className} />
+            <button onClick={ clearCanvas}> Clear</button>
+            </>
     )
 }
 

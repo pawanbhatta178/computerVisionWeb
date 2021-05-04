@@ -7,8 +7,6 @@ function App() {
   const [canvasBackground, setCanvasBackground] = useState<string>("white");
 
 
-
-
   return (
     <div className=" border h-40 w-96 ">
       <Canvas lineWidth={lineWidth} strokeColor={strokeColor} backgroundColor={canvasBackground }/>
