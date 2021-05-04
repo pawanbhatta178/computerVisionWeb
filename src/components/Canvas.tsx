@@ -3,26 +3,39 @@ import React, {useRef, useEffect, useState} from 'react'
 
 interface CanvasProps{
     className?: string;
+    lineWidth?: number;
+    strokeColor?: string;
+    backgroundColor?: string;
 }
 
 
-const Canvas: React.FC<CanvasProps> = (props) => {
+const Canvas: React.FC<CanvasProps> = ({className, lineWidth=5,strokeColor="black", backgroundColor="white"}) => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const contextRef = useRef<CanvasRenderingContext2D|null>(null);
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
+
+
     useEffect(() => {
         const canvas = canvasRef.current;
-        
         if (canvas !== null) {
-           const context = canvas.getContext('2d');
-            //Our first draw
-            if (context !== null) {
-                context.strokeStyle = "black";
-            }
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            canvas.style.border = "1px solid black";
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            const context = canvas.getContext('2d');
             contextRef.current = context;
-            
         }
-      },[])
+   },[])
+
+    useEffect(() => {
+        if (contextRef.current !== null) {
+            contextRef.current.fillStyle = backgroundColor;
+            contextRef.current.fillRect(0, 0, canvasRef.current?.offsetWidth??200, canvasRef?.current?.offsetHeight??200);
+            contextRef.current.strokeStyle =strokeColor;
+            contextRef.current.lineWidth = lineWidth;
+            }
+      },[lineWidth, strokeColor, backgroundColor])
   
     const startDrawing = (mouseEvent: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
         if (contextRef.current !== null) {
@@ -73,7 +86,7 @@ const Canvas: React.FC<CanvasProps> = (props) => {
 
    
     return (
-        <canvas ref={canvasRef} onMouseDown={startDrawing} onTouchStart={startDrawingTouch } onTouchEnd={finishDrawingTouch} onTouchMove={drawTouch} onMouseUp={finishDrawing} onMouseMove={draw} {...props}/>
+        <canvas ref={canvasRef} onMouseDown={startDrawing} onTouchStart={startDrawingTouch} onTouchEnd={finishDrawingTouch} onTouchMove={drawTouch} onMouseUp={finishDrawing} onMouseMove={draw} className={className}/>
     )
 }
 
