@@ -3,8 +3,8 @@ import { Canvas } from "./components/Canvas";
 
 function App() {
   return (
-    <div className="bg-green-500 w-screen h-">
-      <Canvas/>
+    <div className="bg-green-500 border h-96 ">
+      <Canvas className="h-full w-full"/>
     </div>
   );
 }
