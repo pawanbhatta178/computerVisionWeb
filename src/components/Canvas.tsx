@@ -58,13 +58,7 @@ const Canvas: React.FC<CanvasProps> = ({className, lineWidth=5,strokeColor="blac
     }
     
     const isEmpty = () => {
-        if (!pixelHistogram) {
-            return true;
-        }
-      
-        return pixelHistogram.some(pixel => {
-            
-        });
+        return !contextRef.current?.getImageData(0, 0, width ?? 200, height ?? 200).data.some(pixel=>pixel!==0 );
     }
 
     const startDrawing = (mouseEvent: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
