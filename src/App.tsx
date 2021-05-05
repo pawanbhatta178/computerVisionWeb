@@ -3,7 +3,7 @@ import { Canvas } from "./components/Canvas";
 
 function App() {
   const [lineWidth, setLineWidth] = useState<number>(5);
-  const [strokeColor, setStrokeColor] = useState<string>("blue");
+  const [strokeColor, setStrokeColor] = useState<string>("green");
   const [canvasBackground, setCanvasBackground] = useState<string>("white");
 
 
