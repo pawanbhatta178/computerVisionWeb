@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import { Canvas } from "./components/Canvas";
 
 function App() {
-  const [lineWidth, setLineWidth] = useState<number>(5);
-  const [strokeColor, setStrokeColor] = useState<string>("black");
-  const [canvasBackground, setCanvasBackground] = useState<string>("white");
+  const [lineWidth] = useState<number>(5);
+  const [strokeColor] = useState<string>("black");
+  const [canvasBackground] = useState<string>("white");
 
 
   return (

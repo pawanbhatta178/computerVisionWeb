@@ -11,11 +11,14 @@ interface CanvasProps{
 
 const Canvas: React.FC<CanvasProps> = ({className, lineWidth=5,strokeColor="black", backgroundColor="white", children}) => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
+    const canvasRef2 = useRef<HTMLCanvasElement | null>(null);
     const contextRef = useRef<CanvasRenderingContext2D|null>(null);
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
     const [height, setHeight] = useState<number|null>(null);
     const [width, setWidth] = useState<number|null>(null);
     const [pixelHistogram, setPixelHistogram] = useState<number[]|null>(null);
+    
+
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -75,9 +78,8 @@ const Canvas: React.FC<CanvasProps> = ({className, lineWidth=5,strokeColor="blac
             contextRef.current.moveTo(touchEvent.touches[0].clientX, touchEvent.touches[0].clientY);
             setIsDrawing(true);
         }
-
+        
     }
-
 
     const finishDrawing = (mouseEvent: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
         contextRef.current?.closePath();
@@ -114,7 +116,9 @@ const Canvas: React.FC<CanvasProps> = ({className, lineWidth=5,strokeColor="blac
         <>
         <canvas ref={canvasRef} onMouseDown={startDrawing} onTouchStart={startDrawingTouch} onTouchEnd={finishDrawingTouch} onTouchMove={drawTouch} onMouseUp={finishDrawing} onMouseMove={draw} className={className} />
             <button onClick={clearCanvas}> Clear</button>
-            <button onClick={()=>console.log(isEmpty())}>Check if Empty</button>
+            <button onClick={() => console.log(isEmpty())}>Check if Empty</button>
+            
+            <canvas ref={ canvasRef2}></canvas>
         </>
     )
 }
